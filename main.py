@@ -100,6 +100,18 @@ async def play_from_queue(guild: discord.Guild, channel: discord.VoiceChannel):
     playing_lock[guild_id] = False
     logger.info("🔇 播放完畢，已斷開語音連線")
 
+@bot.event
+async def on_voice_state_update(member, before, after):
+    if member.id != bot.user.id:
+        return
+
+    # 如果 bot 原本在頻道（before.channel != None），但現在已不在（after.channel == None）
+    if before.channel and not after.channel:
+        guild_id = before.channel.guild.id
+        guild_queues[guild_id].clear()
+        playing_lock[guild_id] = False
+        logger.info(f"📤 Bot 被從語音頻道移除，已清空佇列並重置播放鎖（guild_id={guild_id}）")
+
 # === /show_playlist 指令 ===
 @bot.tree.command(name="show_playlist", description="顯示你的某個歌單內容")
 @app_commands.describe(name="歌單名稱")
