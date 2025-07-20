@@ -1,4 +1,4 @@
-py-cord
+py-cord==2.4.1
 python-dotenv
 boto3
 botocore
