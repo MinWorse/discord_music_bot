@@ -145,6 +145,25 @@ async def show_playlist(interaction: discord.Interaction, name: str):
     await interaction.response.send_message("\n".join(lines))
     logger.info("✅ 歌單內容已發送")
 
+# === /disconnect 指令 ===
+@bot.tree.command(name="disconnect", description="讓機器人離開語音頻道並清空佇列")
+async def disconnect(interaction: discord.Interaction):
+    guild = interaction.guild
+    guild_id = guild.id
+
+    vc = discord.utils.get(bot.voice_clients, guild=guild)
+    if vc:
+        await vc.disconnect()
+        logger.info(f"🛑 已離開語音頻道：{vc.channel.name}")
+    else:
+        await interaction.response.send_message("⚠️ 機器人未連接語音頻道")
+        return
+
+    guild_queues[guild_id].clear()
+    playing_lock[guild_id] = False
+    logger.info("🧹 已清空播放佇列並解除播放鎖定")
+    await interaction.response.send_message("👋 已離開語音頻道，佇列已清空")
+
 # === /insert 指令 ===
 @bot.tree.command(name="insert", description="插播歌曲，立即放在佇列最前面")
 @app_commands.describe(title="歌曲標題")
