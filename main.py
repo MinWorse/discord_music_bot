@@ -139,7 +139,7 @@ async def play_playlist(interaction: discord.Interaction, name: str):
     user_id = str(interaction.user.id)
     playlists = load_playlist(user_id)
     if name not in playlists:
-        playlists = load_playlist("allsong")  # 嘗試讀取全域歌單
+        playlists = load_playlist("global_playlists")  # 嘗試讀取全域歌單
         if name not in playlists:
             await interaction.response.send_message(f"⚠️ 找不到歌單 `{name}`")
             return
