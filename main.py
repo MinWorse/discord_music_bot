@@ -11,7 +11,7 @@ import logging
 from random import shuffle as do_shuffle
 
 load_dotenv()
-TOKEN = os.getenv("DISCORD_TOKEN")
+TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 R2_PUBLIC_BASE = os.getenv("R2_PUBLIC_BASE")
 
 intents = discord.Intents.default()
