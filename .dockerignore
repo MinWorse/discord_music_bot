@@ -7,6 +7,5 @@ songs.json
 yt_downloader.py
 r2_uploader.py
 *stable_version
-
-
 .venv/
+*.history

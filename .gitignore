@@ -8,3 +8,4 @@ songs.json
 yt_downloader.py
 *stable_version
 .venv/
+*.history
